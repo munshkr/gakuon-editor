@@ -19,7 +19,50 @@ import {
   ResizeMessage, Widget
 } from 'phosphor-widget';
 
-import './index.css';
+import '../src/index.css';
+
+
+/**
+ * A widget which hosts a CodeMirror editor.
+ */
+class AceWidget extends Widget {
+
+  constructor() {
+    super();
+    this.addClass('AceWidget');
+    this._editor = ace.edit(this.node);
+  }
+
+  get editor(): AceAjax.Editor {
+    return this._editor;
+  }
+
+  loadTarget(target: string): void {
+    var xhr = new XMLHttpRequest();
+    xhr.open('GET', target);
+    xhr.onreadystatechange = () => this._editor.setValue(xhr.responseText);
+    xhr.send();
+  }
+
+  protected onAfterAttach(msg: Message): void {
+    /*
+    this._editor.refresh();
+    */
+  }
+
+  protected onResize(msg: ResizeMessage): void {
+    /*
+    if (msg.width < 0 || msg.height < 0) {
+      this._editor.refresh();
+    } else {
+      this._editor.setWidth(msg.width);
+      this._editor.setHeight(msg.width);
+    }
+    */
+  }
+
+  private _editor: AceAjax.Editor;
+}
 
 
 /**
