@@ -25,8 +25,10 @@
     "mocha": "^3.0.2"
   },
   "dependencies": {
+    "css-loader": "^0.23.1",
     "phosphor-dockpanel": "^0.9.7",
     "phosphor-messaging": "^1.0.6",
-    "phosphor-widget": "^1.0.0-rc.1"
+    "phosphor-widget": "^1.0.0-rc.1",
+    "style-loader": "^0.13.1"
   }
 }
