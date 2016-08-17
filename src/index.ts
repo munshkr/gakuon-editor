@@ -38,7 +38,7 @@ class AceWidget extends Widget {
   }
 
   loadTarget(target: string): void {
-    var xhr = new XMLHttpRequest();
+    let xhr = new XMLHttpRequest();
     xhr.open('GET', target);
     xhr.onreadystatechange = () => this._editor.setValue(xhr.responseText);
     xhr.send();
@@ -56,7 +56,7 @@ class AceWidget extends Widget {
  * Create a placeholder content widget.
  */
 function createContent(title: string): Widget {
-  var widget = new Widget();
+  let widget = new Widget();
   widget.addClass('content');
   widget.addClass(title.toLowerCase());
 
@@ -71,24 +71,24 @@ function createContent(title: string): Widget {
  * The main application entry point.
  */
 function main(): void {
-  var r1 = createContent('Red');
-  var r2 = createContent('Red');
-  var r3 = createContent('Red');
+  let r1 = createContent('Red');
+  let r2 = createContent('Red');
+  let r3 = createContent('Red');
 
-  var b1 = createContent('Blue');
-  var b2 = createContent('Blue');
+  let b1 = createContent('Blue');
+  let b2 = createContent('Blue');
 
-  var g1 = createContent('Green');
-  var g2 = createContent('Green');
-  var g3 = createContent('Green');
+  let g1 = createContent('Green');
+  let g2 = createContent('Green');
+  let g3 = createContent('Green');
 
-  var y1 = createContent('Yellow');
-  var y2 = createContent('Yellow');
+  let y1 = createContent('Yellow');
+  let y2 = createContent('Yellow');
 
-  var panel = new DockPanel();
+  let panel = new DockPanel();
   panel.id = 'main';
 
-  var cmSource = new AceWidget();
+  let cmSource = new AceWidget();
   cmSource.loadTarget('./bundle.js');
   cmSource.title.text = 'Source';
 
@@ -108,7 +108,7 @@ function main(): void {
 
   panel.attach(document.body);
 
-  window.onresize = () => { panel.update() };
+  window.onresize = () => { panel.update(); };
 }
 
 
