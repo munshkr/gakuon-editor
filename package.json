@@ -20,5 +20,13 @@
   },
   "homepage": "https://github.com/munshkr/gakuon-editor",
   "author": "Damián Silvani (@munshkr)",
-  "license": "Apache-2.0"
+  "license": "Apache-2.0",
+  "devDependencies": {
+    "mocha": "^3.0.2"
+  },
+  "dependencies": {
+    "phosphor-dockpanel": "^0.9.7",
+    "phosphor-messaging": "^1.0.6",
+    "phosphor-widget": "^1.0.0-rc.1"
+  }
 }
