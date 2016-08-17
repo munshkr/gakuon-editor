@@ -4,8 +4,9 @@
   "description": "A Music Macro Language (MML) visual editor for the C64 SID chip",
   "main": "./dist/bundle.js",
   "scripts": {
-    "test": "mocha",
-    "start": "webpack-dev-server"
+    "build": "webpack",
+    "start": "webpack-dev-server",
+    "test": "mocha"
   },
   "repository": {
     "type": "git",
