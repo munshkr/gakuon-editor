@@ -44,21 +44,8 @@ class AceWidget extends Widget {
     xhr.send();
   }
 
-  protected onAfterAttach(msg: Message): void {
-    /*
-    this._editor.refresh();
-    */
-  }
-
   protected onResize(msg: ResizeMessage): void {
-    /*
-    if (msg.width < 0 || msg.height < 0) {
-      this._editor.refresh();
-    } else {
-      this._editor.setWidth(msg.width);
-      this._editor.setHeight(msg.width);
-    }
-    */
+    this._editor.resize();
   }
 
   private _editor: AceAjax.Editor;
@@ -101,7 +88,12 @@ function main(): void {
   var panel = new DockPanel();
   panel.id = 'main';
 
-  panel.insertLeft(b1);
+  var cmSource = new AceWidget();
+  cmSource.loadTarget('./bundle.js');
+  cmSource.title.text = 'Source';
+
+  panel.insertLeft(cmSource);
+  panel.insertLeft(b1, cmSource);
 
   panel.insertBottom(y1, b1);
   panel.insertLeft(g1, y1);
