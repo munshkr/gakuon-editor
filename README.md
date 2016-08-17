@@ -3,9 +3,9 @@
 ## Build
 
 ```
-npm install -g typescript typings webpack
-npm install
-make
+# npm install -g typescript typings webpack
+$ npm install
+$ npm start
 ```
 
-Navigate to `dist/index.html`
+Then, navigate to `http://localhost:8080/`

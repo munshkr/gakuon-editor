@@ -4,7 +4,8 @@
   "description": "A Music Macro Language (MML) visual editor for the C64 SID chip",
   "main": "./dist/bundle.js",
   "scripts": {
-    "test": "mocha"
+    "test": "mocha",
+    "start": "webpack-dev-server"
   },
   "repository": {
     "type": "git",
@@ -29,6 +30,7 @@
     "phosphor-dockpanel": "^0.9.7",
     "phosphor-messaging": "^1.0.6",
     "phosphor-widget": "^1.0.0-rc.1",
-    "style-loader": "^0.13.1"
+    "style-loader": "^0.13.1",
+    "ts-loader": "^0.8.2"
   }
 }
