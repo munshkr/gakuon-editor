@@ -1,3 +1,3 @@
 build:
-	cd src && tsc
+	tsc
 	webpack --config webpack.conf.js

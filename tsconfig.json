@@ -4,9 +4,11 @@
     "noEmitOnError": true,
     "module": "commonjs",
     "moduleResolution": "node",
+    "outDir": "lib",
     "target": "es5"
   },
   "files": [
-    "index.ts"
+    "typings/index.d.ts",
+    "src/index.ts"
   ]
 }
