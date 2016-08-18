@@ -7,8 +7,10 @@
     "outDir": "lib/",
     "target": "es5"
   },
-  "files": [
-    "typings/index.d.ts",
-    "src/index.ts"
+  "excludes": [
+    "node_modules",
+    "lib",
+    "dist",
+    "test"
   ]
 }
