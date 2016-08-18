@@ -31,7 +31,9 @@
     "webpack-dev-server": "^1.14.1"
   },
   "dependencies": {
+    "6502asm": "github:munshkr/6502asm.js",
     "css-loader": "^0.23.1",
+    "gakuon": "github:munshkr/gakuon",
     "phosphor-dockpanel": "^0.9.7",
     "phosphor-messaging": "^1.0.6",
     "phosphor-widget": "^1.0.0-rc.1",
