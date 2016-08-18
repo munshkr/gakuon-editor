@@ -6,17 +6,18 @@ import { Widget } from 'phosphor-widget';
 
 import { AceWidget } from '../src/ace_widget';
 
-import '../src/index.css';
+import { Parser } from 'gakuon';
 
+import '../src/index.css';
 
 
 /**
  * Create a placeholder content widget.
  */
-function createContent(title: string): Widget {
+function createPlaceholder(title: string, color: string): Widget {
   let widget = new Widget();
   widget.addClass('content');
-  widget.addClass(title.toLowerCase());
+  widget.addClass(color);
 
   widget.title.text = title;
   widget.title.closable = true;
@@ -29,45 +30,31 @@ function createContent(title: string): Widget {
  * The main application entry point.
  */
 function main(): void {
-  let r1 = createContent('Red');
-  let r2 = createContent('Red');
-  let r3 = createContent('Red');
-
-  let b1 = createContent('Blue');
-  let b2 = createContent('Blue');
-
-  let g1 = createContent('Green');
-  let g2 = createContent('Green');
-  let g3 = createContent('Green');
-
-  let y1 = createContent('Yellow');
-  let y2 = createContent('Yellow');
+  let oscWidget = createPlaceholder('Oscilloscope', 'blue');
+  let contextWidget = createPlaceholder('Context', 'red');
+  let pianoRollWidget = createPlaceholder('Piano Roll', 'green');
 
   let panel = new DockPanel();
   panel.id = 'main';
 
-  let cmSource = new AceWidget();
-  cmSource.loadTarget('./bundle.js');
-  cmSource.title.text = 'Source';
+  // temporal
+  (<any>window).panel = panel;
 
-  panel.insertLeft(cmSource);
-  panel.insertLeft(b1, cmSource);
+  let docWidget = new AceWidget();
+  docWidget.title.text = 'Untitled';
+  //docWidget.editor.setTheme('ace/theme/solarized_dark');
+  docWidget.editor.setOptions({
+    fontSize: '11pt'
+  });
 
-  panel.insertBottom(y1, b1);
-  panel.insertLeft(g1, y1);
-
-  panel.insertBottom(b2);
-
-  panel.insertTabBefore(g2, b2);
-  panel.insertTabBefore(y2, g2);
-  panel.insertTabBefore(g3, y2);
-  panel.insertTabBefore(r2, b1);
-  panel.insertTabBefore(r3, y1);
+  panel.insertRight(docWidget);
+  panel.insertRight(oscWidget, docWidget);
+  panel.insertBottom(contextWidget, oscWidget);
+  panel.insertBottom(pianoRollWidget);
 
   panel.attach(document.body);
 
   window.onresize = () => { panel.update(); };
 }
-
 
 window.onload = main;
