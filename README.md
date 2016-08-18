@@ -3,7 +3,6 @@
 ## Build
 
 ```
-# npm install -g typescript typings webpack tslint
 $ npm install
 $ npm start
 ```
