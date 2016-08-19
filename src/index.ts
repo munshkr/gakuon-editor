@@ -34,15 +34,6 @@ function logHandler(item: MenuItem): void {
 
 
 /**
- * A handler which toggles the item state when executed.
- */
-function saveOnExitHandler(item: MenuItem): void {
-  logHandler(item);
-  item.checked = !item.checked;
-}
-
-
-/**
  * Create the example menu bar.
  */
 function createMenuBar(): MenuBar {
@@ -224,8 +215,6 @@ function createMenuBar(): MenuBar {
 function main(): void {
   let panel = new DockPanel();
   panel.id = 'main';
-
-  (<any>window).panel = panel;      // temporal
 
   let oscWidget = createPlaceholder('Oscilloscope', 'blue');
   let contextWidget = createPlaceholder('Context', 'red');
