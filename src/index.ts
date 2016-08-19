@@ -9,8 +9,6 @@ import { DocumentWidget } from '../src/document_widget';
 
 import { Parser } from 'gakuon';
 
-import '../src/index.css';
-
 
 /**
  * Create a placeholder content widget.
