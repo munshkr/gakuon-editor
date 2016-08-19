@@ -1,0 +1,160 @@
+<!doctype html>
+<html>
+<head>
+<style>
+* {
+	background: #111;
+	color: #bbb;
+	outline: 1px dotted #666;
+}
+
+div {
+	float: left;
+	border: 2px solid #aaa;
+	border-radius: 10px;
+}
+</style>
+</head>
+<body>
+  <button id='play' onclick='silence()'>Silence</button>
+
+  <div>
+    <label for='gain'>Gain</label>
+    <input id='gain' type='range' value='0.5' min='0.0' max='1.0' step='0.01' oninput='gainInp(value)' />
+    <output for='gain' id='gainVal'>0.5</output>
+  </div>
+
+  <div>
+    <label for='freq'>Freq</label>
+    <input id='freq' type='range' value='110' min='55' max='4400' step='10' oninput='freqInp(value)' />
+    <output for='freq' id='freqVal'>110</output>
+  </div>
+
+  <div>
+    <label for='shape'>Shape</label>
+    <input id='shape' type='range' value='2' min='1' max='4' step='1' oninput='shapeInp(value)' />
+    <output for='shape' id='shapeVal'>2</output>
+  </div>
+
+  <div>
+    <canvas id='scope' width=400 height=200></canvas>
+    <br>
+    <canvas id='spectrum' width=400 height=200></canvas>
+  </div>
+
+<script type="text/javascript">
+var auCtx = new AudioContext();
+var osc = auCtx.createOscillator();
+var gain = auCtx.createGain();
+var dest = auCtx.destination;
+var analyser = auCtx.createAnalyser();
+
+analyser.fftSize = 2048;
+
+osc.connect(gain);
+gain.connect(dest);
+gain.connect(analyser);
+
+osc.frequency.value = 110;
+osc.type = 'square';
+gain.gain.value = 0.5;
+osc.start();
+
+var scopeCtx = document.getElementById('scope').getContext('2d');
+var spectCtx = document.getElementById('spectrum').getContext('2d');
+
+draw();
+
+function gainInp(val) {
+  document.querySelector('#gainVal').value = val;
+  gain.gain.value = val;
+}
+
+function freqInp(val) {
+  document.querySelector('#freqVal').value = val;
+  osc.frequency.value = val;
+}
+
+function shapeInp(val) {
+  document.querySelector('#shapeVal').value = val;
+
+  switch (val) {
+    case '2':
+      osc.type = 'square';
+      break;
+    case '3':
+      osc.type = 'sawtooth';
+      break;
+    case '4':
+      osc.type = 'triangle';
+      break;
+    default:
+      osc.type = 'sine';
+      break;
+  }
+}
+
+function silence() {
+  gain.gain.value = 0;
+}
+
+function draw() {
+  drawSpectrum(analyser, spectCtx);
+  drawScope(analyser, scopeCtx);
+
+  requestAnimationFrame(draw);
+}
+
+function drawSpectrum(analyser, ctx) {
+  var width = ctx.canvas.width;
+  var height = ctx.canvas.height;
+  var freqData = new Uint8Array(analyser.frequencyBinCount);
+  var scaling = height / 256;
+
+  analyser.getByteFrequencyData(freqData);
+
+  ctx.fillStyle = 'rgba(20, 20, 20, 0.5)';
+  ctx.fillRect(0, 0, width, height);
+
+  ctx.lineWidth = 2;
+  ctx.strokeStyle = 'rgb(200, 200, 200)';
+  ctx.beginPath();
+
+  for (var x = 0; x < width; x++)
+    ctx.lineTo(x, height - freqData[x] * scaling);
+
+  ctx.stroke();
+}
+
+function drawScope(analyser, ctx) {
+  var width = ctx.canvas.width;
+  var height = ctx.canvas.height;
+  var timeData = new Uint8Array(analyser.frequencyBinCount);
+  var scaling = height / 256;
+  var risingEdge = 0;
+  var edgeThreshold = 5;
+
+  analyser.getByteTimeDomainData(timeData);
+
+  ctx.fillStyle = 'rgba(20, 20, 20, 0.5)';
+  ctx.fillRect(0, 0, width, height);
+
+  ctx.lineWidth = 2;
+  ctx.strokeStyle = 'rgb(200, 200, 200)';
+  ctx.beginPath();
+
+  // No buffer overrun protection
+  while (timeData[risingEdge++] - 128 > 0 && risingEdge <= width);
+  if (risingEdge >= width) risingEdge = 0;
+
+  while (timeData[risingEdge++] - 128 < edgeThreshold && risingEdge <= width);
+  if (risingEdge >= width) risingEdge = 0;
+
+  for (var x = risingEdge; x < timeData.length && x - risingEdge < width; x++)
+    ctx.lineTo(x - risingEdge, height - timeData[x] * scaling);
+
+  ctx.stroke();
+}
+</script>
+</body>
+</html>
