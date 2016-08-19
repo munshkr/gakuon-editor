@@ -5,7 +5,7 @@ import { DockPanel } from 'phosphor-dockpanel';
 import { Message } from 'phosphor-messaging';
 import { Widget } from 'phosphor-widget';
 
-import { AceWidget } from '../src/ace_widget';
+import { DocumentWidget } from '../src/document_widget';
 
 import { Parser } from 'gakuon';
 
@@ -221,88 +221,6 @@ function createMenuBar(): MenuBar {
 
 
 /**
- * Create the example context menu.
- */
-function createContextMenu(): Menu {
-  return new Menu([
-    new MenuItem({
-      text: '&Copy',
-      icon: 'fa fa-copy',
-      shortcut: 'Ctrl+C',
-      handler: logHandler
-    }),
-    new MenuItem({
-      text: 'Cu&t',
-      icon: 'fa fa-cut',
-      shortcut: 'Ctrl+X',
-      handler: logHandler
-    }),
-    new MenuItem({
-      text: '&Paste',
-      icon: 'fa fa-paste',
-      shortcut: 'Ctrl+V',
-      handler: logHandler
-    }),
-    new MenuItem({
-      type: MenuItem.Separator
-    }),
-    new MenuItem({
-      text: '&New Tab',
-      handler: logHandler
-    }),
-    new MenuItem({
-      text: '&Close Tab',
-      handler: logHandler
-    }),
-    new MenuItem({
-      type: MenuItem.Check,
-      text: '&Save On Exit',
-      handler: saveOnExitHandler
-    }),
-    new MenuItem({
-      type: MenuItem.Separator
-    }),
-    new MenuItem({
-      text: 'Task Manager',
-      disabled: true
-    }),
-    new MenuItem({
-      type: MenuItem.Separator
-    }),
-    new MenuItem({
-      text: 'More...',
-      submenu: new Menu([
-        new MenuItem({
-          text: 'One',
-          handler: logHandler
-        }),
-        new MenuItem({
-          text: 'Two',
-          handler: logHandler
-        }),
-        new MenuItem({
-          text: 'Three',
-          handler: logHandler
-        }),
-        new MenuItem({
-          text: 'Four',
-          handler: logHandler
-        })
-      ])
-    }),
-    new MenuItem({
-      type: MenuItem.Separator
-    }),
-    new MenuItem({
-      text: 'Close',
-      icon: 'fa fa-close',
-      handler: logHandler
-    })
-  ]);
-}
-
-
-/**
  * The main application entry point.
  */
 function main(): void {
@@ -315,26 +233,12 @@ function main(): void {
   let contextWidget = createPlaceholder('Context', 'red');
   let pianoRollWidget = createPlaceholder('Piano Roll', 'green');
 
-  let docWidget = new AceWidget();
-  docWidget.title.text = 'Untitled';
-  // docWidget.editor.setTheme('ace/theme/solarized_dark');
-  docWidget.editor.setOptions({
-    fontSize: '11pt'
-  });
+  let docWidget = new DocumentWidget();
 
   panel.insertRight(docWidget);
   panel.insertRight(oscWidget, docWidget);
   panel.insertBottom(contextWidget, oscWidget);
   panel.insertBottom(pianoRollWidget);
-
-  // context menu for docWidget
-  let contextMenu = createContextMenu();
-  docWidget.node.addEventListener('contextmenu', (event: MouseEvent) => {
-    event.preventDefault();
-    let x = event.clientX;
-    let y = event.clientY;
-    contextMenu.popup(x, y);
-  });
 
   let menuBar = createMenuBar();
 
