@@ -14,8 +14,11 @@ import {
 
 import {
   DocumentToolbar,
-  ToolbarButton
 } from './toolbar';
+
+import {
+  ToolbarButton
+} from '../toolbar';
 
 const DOC_PANEL = 'DocumentPanel';
 

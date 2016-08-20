@@ -32,11 +32,6 @@ body {
   min-height: 200px;
 }
 
-.DocumentToolbar {
-  min-height: 24px;
-  max-height: 24px;
-}
-
 .content {
   border: 1px solid black;
   min-width: 50px;
@@ -176,6 +171,8 @@ body {
   transform: translateX(-40%) translateY(-58%);
 }
 
+/* Menu */
+
 .p-MenuBar {
   padding-left: 5px;
   background: #FEFEFE;
@@ -297,36 +294,38 @@ body {
   content: '\f0da';
 }
 
-/* DocumentToolbar */
+/* Toolbar */
 
-.DocumentToolbar {
-    display: flex;
-    flex-direction: row;
-    height: 24px;
+.Toolbar {
+  display: flex;
+  flex-direction: row;
+  height: 24px;
+  min-height: 24px;
+  max-height: 24px;
 }
 
-.DocumentToolbar > .DocumentToolbar-item {
-    flex: 0 0 auto;
-    padding-left: 8px;
-    padding-right: 8px;
-    vertical-align: middle;
-    font-size: 14px;
-    color: #616161;
-    line-height: 23px;
+.Toolbar > .Toolbar-item {
+  flex: 0 0 auto;
+  padding-left: 8px;
+  padding-right: 8px;
+  vertical-align: middle;
+  font-size: 14px;
+  color: #616161;
+  line-height: 23px;
 }
 
-.DocumentToolbar-item.DocumentToolbar-button {
-    font-family: FontAwesome;
-    text-align: center;
-    display: inline-block;
+.Toolbar-item.Toolbar-button {
+  font-family: FontAwesome;
+  text-align: center;
+  display: inline-block;
 }
 
-.DocumentToolbar-button.mod-pressed {
-    background-color: #E0E0E0;
-    box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.5);
+.Toolbar-button.mod-pressed {
+  background-color: #E0E0E0;
+  box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.5);
 }
 
-.DocumentToolbar-button:hover {
-    background-color: #EEEEEE;
-    box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.5);
+.Toolbar-button:hover {
+  background-color: #EEEEEE;
+  box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.5);
 }
