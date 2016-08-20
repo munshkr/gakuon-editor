@@ -27,6 +27,11 @@ body {
   min-height: 200px;
 }
 
+.DocumentPanel {
+  min-width: 200px;
+  min-height: 200px;
+}
+
 
 .content {
   border: 1px solid black;

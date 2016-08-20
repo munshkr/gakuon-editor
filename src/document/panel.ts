@@ -25,25 +25,34 @@ class DocumentPanel extends Panel {
   constructor() {
     super();
 
+    this.addClass('DocumentPanel');
     this.title.text = '[Untitled]';
 
     this.editor = new DocumentEditor();
-    this.toolbar = this._createToolbar();
+    this.toolbar = DocumentPanelPrivate.createToolbar();
 
     this.addChild(this.toolbar);
     this.addChild(this.editor);
   }
 
-  private _createToolbar(): DocumentToolbar {
+}
+
+/**
+ * The namespace for the `DocumentPanel` class private data
+ */
+namespace DocumentPanelPrivate {
+  export
+  function createToolbar(): DocumentToolbar {
     let tb = new DocumentToolbar();
 
-    tb.add('Play', this._createPlayButton());
-    tb.add('Stop', this._createStopButton());
+    tb.add('Play', createPlayButton());
+    tb.add('Stop', createStopButton());
 
     return tb;
   }
 
-  private _createPlayButton(): ToolbarButton {
+  export
+  function createPlayButton(): ToolbarButton {
     return new ToolbarButton({
       className: 'fa fa-play',
       tooltip: 'Play song',
@@ -51,7 +60,8 @@ class DocumentPanel extends Panel {
     });
   }
 
-  private _createStopButton(): ToolbarButton {
+  export
+  function createStopButton(): ToolbarButton {
     return new ToolbarButton({
       className: 'fa fa-stop',
       tooltip: 'Stop song',
