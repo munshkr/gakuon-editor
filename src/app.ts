@@ -27,14 +27,21 @@ class App {
    * Construct a new App instance and attach to document.body
    */
   constructor() {
-    this._menuBar = Private.createMenuBar();
-    this._panel = Private.createDockPanel();
+    this._menuBar = Private.createMenuBar(this);
+    this._panel = Private.createDockPanel(this);
 
     // attach menu and panel to HTML body
     this._menuBar.attach(document.body);
     this._panel.attach(document.body);
 
     window.onresize = () => this._panel.update();
+  }
+
+  /**
+   * Get dock panel
+   */
+  get dockPanel(): DockPanel {
+    return this._panel;
   }
 
   /**
@@ -49,6 +56,7 @@ class App {
    */
   set currentDocument(doc) {
     this._currentDocument = doc;
+    // TODO emit signal to doc
   }
 
   private _menuBar: MenuBar;
@@ -62,26 +70,29 @@ class App {
  */
 namespace Private {
   export
-  function createMenuBar(): MenuBar {
+  function createMenuBar(app: App): MenuBar {
     let fileMenu = new Menu([
       new MenuItem({
         text: 'New',
         shortcut: 'Ctrl+N',
-        handler: logHandler
+        handler: () => newFile(app)
       }),
       new MenuItem({
         text: 'Open',
         shortcut: 'Ctrl+O',
-        handler: logHandler
+        handler: logHandler,
+        disabled: true
       }),
       new MenuItem({
         text: 'Save',
         shortcut: 'Ctrl+S',
-        handler: logHandler
+        handler: logHandler,
+        disabled: true
       }),
       new MenuItem({
         text: 'Save As...',
         shortcut: 'Ctrl+Shift+S',
+        handler: logHandler,
         disabled: true
       }),
       new MenuItem({
@@ -89,18 +100,21 @@ namespace Private {
       }),
       new MenuItem({
         text: 'Export SID file',
-        handler: exportSID
+        handler: exportSID,
+        disabled: true
       }),
       new MenuItem({
         text: 'Export to...',
         submenu: new Menu([
           new MenuItem({
             text: 'Assembly code (.asm)',
-            handler: logHandler
+            handler: logHandler,
+            disabled: true
           }),
           new MenuItem({
             text: 'Player program (.prg)',
-            handler: logHandler
+            handler: logHandler,
+            disabled: true
           })
         ])
       }),
@@ -110,11 +124,13 @@ namespace Private {
       new MenuItem({
         text: 'Close',
         shortcut: 'Ctrl+W',
-        handler: logHandler
+        handler: logHandler,
+        disabled: true
       }),
       new MenuItem({
         text: 'Close All',
-        handler: logHandler
+        handler: logHandler,
+        disabled: true
       })
     ]);
 
@@ -123,12 +139,14 @@ namespace Private {
         text: '&Undo',
         icon: 'fa fa-undo',
         shortcut: 'Ctrl+Z',
-        handler: logHandler
+        handler: logHandler,
+        disabled: true
       }),
       new MenuItem({
         text: '&Repeat',
         icon: 'fa fa-repeat',
         shortcut: 'Ctrl+Y',
+        handler: logHandler,
         disabled: true
       }),
       new MenuItem({
@@ -138,19 +156,22 @@ namespace Private {
         text: '&Copy',
         icon: 'fa fa-copy',
         shortcut: 'Ctrl+C',
-        handler: logHandler
+        handler: logHandler,
+        disabled: true
       }),
       new MenuItem({
         text: 'Cu&t',
         icon: 'fa fa-cut',
         shortcut: 'Ctrl+X',
-        handler: logHandler
+        handler: logHandler,
+        disabled: true
       }),
       new MenuItem({
         text: '&Paste',
         icon: 'fa fa-paste',
         shortcut: 'Ctrl+V',
-        handler: logHandler
+        handler: logHandler,
+        disabled: true
       })
     ]);
 
@@ -158,17 +179,20 @@ namespace Private {
       new MenuItem({
         text: 'Find...',
         shortcut: 'Ctrl+F',
-        handler: logHandler
+        handler: logHandler,
+        disabled: true
       }),
       new MenuItem({
         text: 'Find Next',
         shortcut: 'F3',
-        handler: logHandler
+        handler: logHandler,
+        disabled: true
       }),
       new MenuItem({
         text: 'Find Previous',
         shortcut: 'Shift+F3',
-        handler: logHandler
+        handler: logHandler,
+        disabled: true
       }),
       new MenuItem({
         type: MenuItem.Separator
@@ -176,23 +200,45 @@ namespace Private {
       new MenuItem({
         text: 'Replace...',
         shortcut: 'Ctrl+H',
-        handler: logHandler
+        handler: logHandler,
+        disabled: true
       }),
       new MenuItem({
         text: 'Replace Next',
         shortcut: 'Ctrl+Shift+H',
-        handler: logHandler
+        handler: logHandler,
+        disabled: true
+      })
+    ]);
+
+    let viewMenu = new Menu([
+      new MenuItem({
+        type: MenuItem.Check,
+        text: 'Piano Roll',
+        handler: (item) => viewPianoRoll(item, app)
+      }),
+      new MenuItem({
+        type: MenuItem.Check,
+        text: 'Instrument Editor',
+        handler: (item) => viewInstrumentEditor(item, app)
+      }),
+      new MenuItem({
+        type: MenuItem.Check,
+        text: 'Oscilloscope',
+        handler: (item) => viewOscilloscope(item, app)
       })
     ]);
 
     let helpMenu = new Menu([
       new MenuItem({
         text: 'Documentation',
-        handler: logHandler
+        handler: logHandler,
+        disabled: true
       }),
       new MenuItem({
         text: 'About',
-        handler: logHandler
+        handler: logHandler,
+        disabled: true
       })
     ]);
 
@@ -211,7 +257,7 @@ namespace Private {
       }),
       new MenuItem({
         text: 'View',
-        type: MenuItem.Submenu
+        submenu: viewMenu
       }),
       new MenuItem({
         type: MenuItem.Separator
@@ -224,7 +270,7 @@ namespace Private {
   }
 
   export
-  function createDockPanel(): DockPanel {
+  function createDockPanel(app: App): DockPanel {
     let panel = new DockPanel();
     panel.id = PANEL_ID;
 
@@ -250,8 +296,47 @@ namespace Private {
     console.log(item.text);
   }
 
+  /**
+   * Create a new file tab
+   */
+  function newFile(app: App): void {
+    let doc = new DocumentPanel();
+    app.dockPanel.insertTabAfter(doc);
+    app.currentDocument = doc;
+  }
+
+  /**
+   * Compile current document and export to .sid
+   */
   function exportSID(): void {
     console.log('SID exported');
+  }
+
+  /**
+   * Toggle Piano Roll panel widget
+   */
+  function viewPianoRoll(item: MenuItem, app: App): void {
+    // TODO: Show/hide panel
+    let panel = createPlaceholder('Piano Roll', 'green');
+    app.dockPanel.insertRight(panel);
+  }
+
+  /**
+   * Toggle Instrument Editor panel widget
+   */
+  function viewInstrumentEditor(item: MenuItem, app: App): void {
+    // TODO: Show/hide panel
+    let panel = createPlaceholder('Instrument Editor', 'red');
+    app.dockPanel.insertRight(panel);
+  }
+
+  /**
+   * Toggle Oscilloscope panel widget
+   */
+  function viewOscilloscope(item: MenuItem, app: App): void {
+    // TODO: Show/hide panel
+    let panel = createPlaceholder('Oscilloscope', 'blue');
+    app.dockPanel.insertRight(panel);
   }
 
   /**
