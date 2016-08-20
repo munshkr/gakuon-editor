@@ -34,6 +34,7 @@ class DocumentPanel extends Widget {
 
     this.addClass(DOC_PANEL);
     this.title.text = DEFAULT_TITLE;
+    this.title.closable = true;
 
     this._toolbar = Private.createToolbar();
     this._editor = new DocumentEditor();
