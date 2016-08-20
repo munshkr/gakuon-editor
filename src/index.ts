@@ -7,7 +7,7 @@ import { Widget } from 'phosphor-widget';
 
 import { DocumentPanel } from './document';
 
-import { Parser } from 'gakuon';
+import { Compiler } from 'gakuon';
 
 
 /**
@@ -32,6 +32,10 @@ function logHandler(item: MenuItem): void {
   console.log(item.text);
 }
 
+function exportSID(): void {
+  let compiler = new Compiler();
+  // alert('exported');
+}
 
 /**
  * Create the example menu bar.
@@ -63,7 +67,7 @@ function createMenuBar(): MenuBar {
     }),
     new MenuItem({
       text: 'Export SID file',
-      handler: logHandler
+      handler: exportSID
     }),
     new MenuItem({
       text: 'Export to...',

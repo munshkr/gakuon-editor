@@ -29,7 +29,7 @@ declare module "gakuon" {
   }
 
   export class Compiler {
-    constructor(options: CompilerOptions);
+    constructor(options?: CompilerOptions);
 
     compile(source: string): string;
   }

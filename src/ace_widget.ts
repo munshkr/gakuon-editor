@@ -15,6 +15,8 @@ class AceWidget extends Widget {
     this.addClass('AceWidget');
     this._editor = ace.edit(this.node);
     this._editor.$blockScrolling = Infinity;
+
+    this._editor.onFocus = () => this.onFocus();
   }
 
   get editor(): AceAjax.Editor {
@@ -26,6 +28,10 @@ class AceWidget extends Widget {
     xhr.open('GET', target);
     xhr.onreadystatechange = () => this._editor.setValue(xhr.responseText);
     xhr.send();
+  }
+
+  protected onFocus(): void {
+    this._editor.onFocus;
   }
 
   protected onResize(msg: ResizeMessage): void {

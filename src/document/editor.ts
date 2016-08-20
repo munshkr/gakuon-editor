@@ -17,4 +17,8 @@ class DocumentEditor extends AceWidget {
       fontSize: '11pt'
     });
   }
+
+  onFocus() {
+    console.log('focus');
+  }
 }
