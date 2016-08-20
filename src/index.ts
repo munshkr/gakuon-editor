@@ -5,7 +5,8 @@ import { DockPanel } from 'phosphor-dockpanel';
 import { Message } from 'phosphor-messaging';
 import { Widget } from 'phosphor-widget';
 
-import { DocumentWidget } from '../src/document_widget';
+import { DocumentEditor } from '../src/document_editor';
+import { DocumentToolbar, ToolbarButton } from '../src/document_toolbar';
 
 import { Parser } from 'gakuon';
 
@@ -208,6 +209,22 @@ function createMenuBar(): MenuBar {
   ]);
 }
 
+function createPlayButton() {
+  return new ToolbarButton({
+    className: 'fa fa-play',
+    tooltip: 'Play song',
+    onClick: () => alert('not implemented')
+   });
+}
+
+function createStopButton() {
+  return new ToolbarButton({
+    className: 'fa fa-stop',
+    tooltip: 'Stop song',
+    onClick: () => alert('not implemented')
+   });
+}
+
 
 /**
  * The main application entry point.
@@ -220,14 +237,19 @@ function main(): void {
   let contextWidget = createPlaceholder('Context', 'red');
   let pianoRollWidget = createPlaceholder('Piano Roll', 'green');
 
-  let docWidget = new DocumentWidget();
+  let docEditor = new DocumentEditor();
 
-  panel.insertRight(docWidget);
-  panel.insertRight(oscWidget, docWidget);
+  panel.insertRight(docEditor);
+  panel.insertRight(oscWidget, docEditor);
   panel.insertBottom(contextWidget, oscWidget);
   panel.insertBottom(pianoRollWidget);
 
   let menuBar = createMenuBar();
+
+  let tb = new DocumentToolbar();
+  tb.add('Play', createPlayButton());
+  tb.add('Stop', createStopButton());
+  panel.insertRight(tb);
 
   // attach menu and panel to HTML body
   menuBar.attach(document.body);
