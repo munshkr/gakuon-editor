@@ -5,7 +5,7 @@ import { DockPanel } from 'phosphor-dockpanel';
 import { Message } from 'phosphor-messaging';
 import { Widget } from 'phosphor-widget';
 
-import { DocumentPanel } from '../src/document_panel';
+import { DocumentPanel } from './document';
 
 import { Parser } from 'gakuon';
 

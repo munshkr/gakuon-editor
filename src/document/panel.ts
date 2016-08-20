@@ -1,9 +1,17 @@
 'use strict';
 
-import { Panel } from 'phosphor-panel';
+import {
+  Panel
+} from 'phosphor-panel';
 
-import { DocumentEditor } from '../src/document_editor';
-import { DocumentToolbar, ToolbarButton } from '../src/document_toolbar';
+import {
+  DocumentEditor
+} from './editor';
+
+import {
+  DocumentToolbar,
+  ToolbarButton
+} from './toolbar';
 
 /**
  * Panel that contains the Document Editor and a Toolbar
@@ -16,6 +24,8 @@ class DocumentPanel extends Panel {
 
   constructor() {
     super();
+
+    this.title.text = '[Untitled]';
 
     this.editor = new DocumentEditor();
     this.toolbar = this._createToolbar();
