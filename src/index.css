@@ -1,16 +1,8 @@
-/*-----------------------------------------------------------------------------
-| Copyright (c) 2014-2015, PhosphorJS Contributors
-|
-| Distributed under the terms of the BSD 3-Clause License.
-|
-| The full license is in the file LICENSE, distributed with this software.
-|----------------------------------------------------------------------------*/
 body {
   margin: 0;
   padding: 0;
   background: #F5F6F7;
 }
-
 
 #main {
   position: absolute;
@@ -20,50 +12,32 @@ body {
   bottom: 6px;
 }
 
-
-.AceWidget {
-  border: 1px solid #C0C0C0;
-  min-width: 200px;
-  min-height: 200px;
-}
-
-.DocumentPanel {
-  min-width: 200px;
-  min-height: 200px;
-}
-
 .content {
   border: 1px solid black;
   min-width: 50px;
   min-height: 50px;
 }
 
-
 .red {
   background: #E74C3C;
 }
-
 
 .yellow {
   background: #F1C40F;
 }
 
-
 .green {
   background: #27AE60;
 }
-
 
 .blue {
   background: #3498DB;
 }
 
-
 .p-DockTabPanel {
   padding-right: 2px;
   padding-bottom: 2px;
 }
-
 
 .p-DockTabPanel > .p-StackedPanel {
   padding: 10px;
@@ -73,12 +47,10 @@ body {
   box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
 }
 
-
 .p-DockPanel-overlay {
   background: rgba(255, 255, 255, 0.6);
   border: 1px dashed black;
 }
-
 
 .p-DockPanel-overlay.p-mod-root-top,
 .p-DockPanel-overlay.p-mod-root-left,
@@ -88,29 +60,24 @@ body {
   border-width: 2px;
 }
 
-
 .p-TabBar {
   min-height: 24px;
   max-height: 24px;
 }
 
-
 .p-TabBar-header {
   display: none;
 }
-
 
 .p-TabBar-footer {
   flex: 0 0 1px;
   background: #C0C0C0;
 }
 
-
 .p-TabBar-content {
   min-width: 0;
   align-items: flex-end;
 }
-
 
 .p-TabBar-tab {
   flex: 0 1 125px;
@@ -125,11 +92,9 @@ body {
   font: 12px Helvetica, Arial, sans-serif;
 }
 
-
 .p-TabBar-tab:first-child {
   margin-left: 0;
 }
-
 
 .p-TabBar-tab.p-mod-current {
   min-height: 23px;
@@ -138,11 +103,9 @@ body {
   transform: translateY(1px);
 }
 
-
 .p-TabBar-tab:hover:not(.p-mod-current) {
   background: #F0F0F0;
 }
-
 
 .p-TabBar-tabIcon,
 .p-TabBar-tabText,
@@ -150,17 +113,14 @@ body {
   line-height: 20px;
 }
 
-
 .p-TabBar-tab.p-mod-closable > .p-TabBar-tabCloseIcon {
   margin-left: 4px;
 }
-
 
 .p-TabBar-tab.p-mod-closable > .p-TabBar-tabCloseIcon:before {
   content: '\f00d';
   font-family: FontAwesome;
 }
-
 
 .p-TabBar-tab.p-mod-drag-image {
   min-height: 23px;
@@ -181,11 +141,9 @@ body {
   font: 13px Helvetica, Arial, sans-serif;
 }
 
-
 .p-MenuBar-menu {
   transform: translateY(-1px);
 }
-
 
 .p-MenuBar-item {
   padding: 4px 8px;
@@ -193,16 +151,13 @@ body {
   border-right: 1px solid transparent;
 }
 
-
 .p-MenuBar-item.p-mod-active {
   background: #E5E5E5;
 }
 
-
 .p-MenuBar-item.p-mod-disabled {
   color: rgba(0, 0, 0, 0.26);
 }
-
 
 .p-MenuBar-item.p-mod-separator-type {
   margin: 2px;
@@ -211,7 +166,6 @@ body {
   border-left: 1px solid #DDDDDD;
 }
 
-
 .p-MenuBar.p-mod-active .p-MenuBar-item.p-mod-active {
   z-index: 1000000;
   background: white;
@@ -219,7 +173,6 @@ body {
   border-right: 1px solid #C0C0C0;
   box-shadow: 0px 0px 6px rgba(0, 0, 0, 0.2);
 }
-
 
 .p-Menu {
   z-index: 10000;
@@ -231,44 +184,36 @@ body {
   box-shadow: 0px 1px 6px rgba(0, 0, 0, 0.2);
 }
 
-
 .p-Menu-item.p-mod-active {
   background: #E5E5E5;
 }
 
-
 .p-Menu-item.p-mod-disabled {
   color: rgba(0, 0, 0, 0.26);
 }
-
 
 .p-Menu-itemIcon {
   width: 21px;
   padding: 4px 2px;
 }
 
-
 .p-Menu-itemText {
   padding: 4px 35px 4px 2px;
 }
 
-
 .p-Menu-itemShortcut {
   padding: 4px 0px;
 }
-
 
 .p-Menu-itemSubmenuIcon {
   width: 16px;
   padding: 4px 0px;
 }
 
-
 .p-Menu-item.p-type-separator > span {
   padding: 0;
   height: 9px;
 }
-
 
 .p-Menu-item.p-type-separator > span::after {
   content: '';
@@ -278,54 +223,15 @@ body {
   border-top: 1px solid #DDDDDD;
 }
 
-
 .p-Menu-itemIcon::before,
 .p-Menu-itemSubmenuIcon::before {
   font-family: FontAwesome;
 }
 
-
 .p-Menu-item.p-type-check.p-mod-checked > .p-Menu-itemIcon::before {
   content: '\f00c';
 }
 
-
 .p-Menu-item.p-type-submenu > .p-Menu-itemSubmenuIcon::before {
   content: '\f0da';
-}
-
-/* Toolbar */
-
-.Toolbar {
-  display: flex;
-  flex-direction: row;
-  height: 24px;
-  min-height: 24px;
-  max-height: 24px;
-}
-
-.Toolbar > .Toolbar-item {
-  flex: 0 0 auto;
-  padding-left: 8px;
-  padding-right: 8px;
-  vertical-align: middle;
-  font-size: 14px;
-  color: #616161;
-  line-height: 23px;
-}
-
-.Toolbar-item.Toolbar-button {
-  font-family: FontAwesome;
-  text-align: center;
-  display: inline-block;
-}
-
-.Toolbar-button.mod-pressed {
-  background-color: #E0E0E0;
-  box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.5);
-}
-
-.Toolbar-button:hover {
-  background-color: #EEEEEE;
-  box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.5);
 }

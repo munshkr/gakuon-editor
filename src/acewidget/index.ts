@@ -4,6 +4,9 @@ import {
   ResizeMessage, Widget
 } from 'phosphor-widget';
 
+import './index.css';
+
+
 /**
  * A widget which hosts a Ace text editor.
  */

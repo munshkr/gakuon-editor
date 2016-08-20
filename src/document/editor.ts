@@ -2,7 +2,7 @@
 
 import {
   AceWidget
-} from '../ace_widget';
+} from '../acewidget';
 
 /**
  * Widget for the MML Document editor

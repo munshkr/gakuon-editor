@@ -9,6 +9,8 @@ import { DocumentPanel } from './document';
 
 import { Compiler } from 'gakuon';
 
+import './index.css';
+
 
 /**
  * Create a placeholder content widget.

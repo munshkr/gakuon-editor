@@ -1,0 +1,39 @@
+/**
+ * Copyright (c) Jupyter Development Team.
+ * Distributed under the terms of the Modified BSD License.
+ *
+ * Adapted from Jupyter Lab Notebook toolbar implementation
+ */
+.Toolbar {
+  display: flex;
+  flex-direction: row;
+  height: 24px;
+  min-height: 24px;
+  max-height: 24px;
+}
+
+.Toolbar > .Toolbar-item {
+  flex: 0 0 auto;
+  padding-left: 8px;
+  padding-right: 8px;
+  vertical-align: middle;
+  font-size: 14px;
+  color: #616161;
+  line-height: 23px;
+}
+
+.Toolbar-item.Toolbar-button {
+  font-family: FontAwesome;
+  text-align: center;
+  display: inline-block;
+}
+
+.Toolbar-button.mod-pressed {
+  background-color: #E0E0E0;
+  box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.5);
+}
+
+.Toolbar-button:hover {
+  background-color: #EEEEEE;
+  box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.5);
+}

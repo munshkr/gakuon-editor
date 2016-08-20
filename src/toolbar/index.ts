@@ -1,7 +1,9 @@
-// Copyright (c) Jupyter Development Team.
-// Distributed under the terms of the Modified BSD License.
-//
-// Adapted from JupyterLab Notebook toolbar implementation
+/**
+ * Copyright (c) Jupyter Development Team.
+ * Distributed under the terms of the Modified BSD License.
+ *
+ * Adapted from Jupyter Lab Notebook toolbar implementation
+ */
 'use strict';
 
 import {
@@ -19,6 +21,9 @@ import {
 import {
   Widget
 } from 'phosphor-widget';
+
+import './index.css';
+
 
 /**
  * The class name added to document toolbars.
