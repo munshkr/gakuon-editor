@@ -39,17 +39,17 @@ function logHandler(item: MenuItem): void {
 function createMenuBar(): MenuBar {
   let fileMenu = new Menu([
     new MenuItem({
-      text: 'New File',
+      text: 'New',
       shortcut: 'Ctrl+N',
       handler: logHandler
     }),
     new MenuItem({
-      text: 'Open File',
+      text: 'Open',
       shortcut: 'Ctrl+O',
       handler: logHandler
     }),
     new MenuItem({
-      text: 'Save File',
+      text: 'Save',
       shortcut: 'Ctrl+S',
       handler: logHandler
     }),
@@ -62,34 +62,18 @@ function createMenuBar(): MenuBar {
       type: MenuItem.Separator
     }),
     new MenuItem({
-      text: 'Close File',
-      shortcut: 'Ctrl+W',
+      text: 'Export SID file',
       handler: logHandler
     }),
     new MenuItem({
-      text: 'Close All',
-      handler: logHandler
-    }),
-    new MenuItem({
-      type: MenuItem.Separator
-    }),
-    new MenuItem({
-      text: 'More...',
+      text: 'Export to...',
       submenu: new Menu([
         new MenuItem({
-          text: 'One',
+          text: 'Assembly code (.asm)',
           handler: logHandler
         }),
         new MenuItem({
-          text: 'Two',
-          handler: logHandler
-        }),
-        new MenuItem({
-          text: 'Three',
-          handler: logHandler
-        }),
-        new MenuItem({
-          text: 'Four',
+          text: 'Player program (.prg)',
           handler: logHandler
         })
       ])
@@ -98,7 +82,12 @@ function createMenuBar(): MenuBar {
       type: MenuItem.Separator
     }),
     new MenuItem({
-      text: 'Exit',
+      text: 'Close',
+      shortcut: 'Ctrl+W',
+      handler: logHandler
+    }),
+    new MenuItem({
+      text: 'Close All',
       handler: logHandler
     })
   ]);
