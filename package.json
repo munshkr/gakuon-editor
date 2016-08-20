@@ -2,7 +2,7 @@
   "name": "gakuon-editor",
   "version": "0.1.0",
   "description": "A Music Macro Language (MML) visual editor for the C64 SID chip",
-  "main": "./dist/bundle.js",
+  "main": "./build/bundle.js",
   "scripts": {
     "build": "webpack",
     "start": "webpack-dev-server",

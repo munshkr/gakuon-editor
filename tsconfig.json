@@ -4,14 +4,12 @@
     "noEmitOnError": true,
     "module": "commonjs",
     "moduleResolution": "node",
-    "outDir": "lib/",
     "target": "es5",
     "sourceMap": true
   },
   "excludes": [
     "node_modules",
-    "lib",
-    "dist",
+    "build",
     "test"
   ]
 }
