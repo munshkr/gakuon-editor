@@ -32,6 +32,9 @@
   },
   "dependencies": {
     "6502asm": "github:munshkr/6502asm.js",
+    "babel-core": "^6.13.2",
+    "babel-loader": "^6.2.5",
+    "babel-preset-es2015": "^6.13.2",
     "css-loader": "^0.23.1",
     "gakuon": "github:munshkr/gakuon",
     "phosphor-dockpanel": "^0.9.7",
