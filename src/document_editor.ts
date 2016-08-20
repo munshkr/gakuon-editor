@@ -10,6 +10,7 @@ class DocumentEditor extends AceWidget {
 
   constructor() {
     super();
+
     this.addClass('DocumentEditor');
     this.title.text = '[Untitled]';
     this.editor.setOptions({

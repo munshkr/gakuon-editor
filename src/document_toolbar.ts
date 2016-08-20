@@ -21,17 +21,17 @@ import {
 /**
  * The class name added to document toolbars.
  */
-const DOC_TOOLBAR = 'document-toolbar';
+const DOC_TOOLBAR = 'DocumentToolbar';
 
 /**
  * The class name added to document toolbar items.
  */
-const TOOLBAR_ITEM = 'document-toolbar-item';
+const TOOLBAR_ITEM = 'DocumentToolbar-item';
 
 /**
  * The class name added to document toolbar buttons.
  */
-const TOOLBAR_BUTTON = 'document-toolbar-button';
+const TOOLBAR_BUTTON = 'DocumentToolbar-button';
 
 /**
  * The class name added to a pressed button.
