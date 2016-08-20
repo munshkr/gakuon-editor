@@ -32,6 +32,10 @@ body {
   min-height: 200px;
 }
 
+.DocumentToolbar {
+  min-height: 24px;
+  max-height: 24px;
+}
 
 .content {
   border: 1px solid black;

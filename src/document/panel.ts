@@ -1,8 +1,12 @@
 'use strict';
 
 import {
-  Panel
-} from 'phosphor-panel';
+  Widget
+} from 'phosphor-widget';
+
+import {
+  BoxLayout
+} from 'phosphor-boxpanel';
 
 import {
   DocumentEditor
@@ -13,34 +17,74 @@ import {
   ToolbarButton
 } from './toolbar';
 
+const DOC_PANEL = 'DocumentPanel';
+
+const DEFAULT_TITLE = '[Untitled]';
+
 /**
  * Panel that contains the Document Editor and a Toolbar
  */
 export
-class DocumentPanel extends Panel {
-
-  toolbar: DocumentToolbar;
-  editor:  DocumentEditor;
-
+class DocumentPanel extends Widget {
+  /**
+   * Construct a new Document panel
+   */
   constructor() {
     super();
 
-    this.addClass('DocumentPanel');
-    this.title.text = '[Untitled]';
+    this.addClass(DOC_PANEL);
+    this.title.text = DEFAULT_TITLE;
 
-    this.editor = new DocumentEditor();
-    this.toolbar = DocumentPanelPrivate.createToolbar();
+    this._toolbar = Private.createToolbar();
+    this._editor = new DocumentEditor();
 
-    this.addChild(this.toolbar);
-    this.addChild(this.editor);
+    let layout = new BoxLayout();
+    layout.direction = BoxLayout.TopToBottom;
+    layout.spacing = 0;
+
+    BoxLayout.setStretch(this._toolbar, 0);
+    BoxLayout.setStretch(this._editor, 1);
+
+    layout.addChild(this._toolbar);
+    layout.addChild(this._editor);
+
+    this.layout = layout;
   }
 
+  /**
+   * Get the toolbar used by this widget
+   */
+  get toolbar(): DocumentToolbar {
+    return this._toolbar;
+  }
+
+  /**
+   * Get the document editor used by this widget
+   */
+  get editor(): DocumentEditor {
+    return this._editor;
+  }
+
+  /**
+   * Dispose of the resources used by the widget
+   */
+  dispose(): void {
+    if (this.isDisposed) {
+      return;
+    }
+    this._editor = null;
+    this._toolbar = null;
+    super.dispose();
+  }
+
+  private _toolbar: DocumentToolbar = null;
+  private _editor: DocumentEditor = null;
 }
 
 /**
  * The namespace for the `DocumentPanel` class private data
  */
-namespace DocumentPanelPrivate {
+namespace Private {
   export
   function createToolbar(): DocumentToolbar {
     let tb = new DocumentToolbar();
