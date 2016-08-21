@@ -74,6 +74,23 @@ class App {
   }
 
   /**
+   * Close current document tab
+   */
+  closeDocument() {
+    this.currentDocument.close();
+  }
+
+  /**
+   * Close all document tabs
+   */
+  closeAllDocuments() {
+    let docPanel = this.panel.documentPanel;
+    while (docPanel.childCount() > 0) {
+      docPanel.currentWidget.close();
+    }
+  }
+
+  /**
    * Compile current document and export to .sid
    */
   exportSID() {
@@ -174,13 +191,11 @@ namespace Private {
       new MenuItem({
         text: 'Close',
         shortcut: 'Ctrl+W',
-        handler: logHandler,
-        disabled: true
+        handler: () => app.closeDocument(),
       }),
       new MenuItem({
         text: 'Close All',
-        handler: logHandler,
-        disabled: true
+        handler: () => app.closeAllDocuments(),
       })
     ]);
 
