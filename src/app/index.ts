@@ -22,8 +22,15 @@ import {
   AppPanel
 } from './panel';
 
-export * from './panel';
+import {
+  Compiler
+} from 'gakuon';
 
+import {
+  Assembler
+} from '6502asm';
+
+export * from './panel';
 
 
 export
@@ -38,6 +45,9 @@ class App {
     // attach menu and panel to HTML body
     this._menuBar.attach(document.body);
     this._panel.attach(document.body);
+
+    this._compiler = new Compiler();
+    this._assembler =  new Assembler();
 
     window.onresize = () => this._panel.update();
   }
@@ -63,9 +73,43 @@ class App {
     this._panel.documentPanel.currentWidget = doc;
   }
 
+  /**
+   * Compile current document and export to .sid
+   */
+  exportSID() {
+    let source = this.currentDocument.editor.content;
+    let asm = Util.bench('compile', () => this._compiler.compile(source));
+    let {objectCode} = Util.bench('assemble', () => this._assembler.assemble(asm));
+    console.log(objectCode);
+  }
+
+  /**
+   * Compile current document and export assembly code
+   */
+  exportASM() {
+    let source = this.currentDocument.editor.content;
+    let asm = Util.bench('compile', () => this._compiler.compile(source));
+    console.log(asm);
+  }
+
+  /**
+   * Compile current document and export player program
+   */
+  exportPlayer() {
+    let source = this.currentDocument.editor.content;
+    let asm = Util.bench('compile', () => {
+      let compiler = new Compiler({ player: true });
+      return compiler.compile(source);
+    });
+    let {objectCode} = Util.bench('assemble', () => this._assembler.assemble(asm));
+    console.log(objectCode);
+  }
+
   private _menuBar: MenuBar;
   private _panel: AppPanel;
   private _currentDocument: DocumentPanel;
+  private _compiler: Compiler;
+  private _assembler: Assembler;
 }
 
 
@@ -109,21 +153,18 @@ namespace Private {
       }),
       new MenuItem({
         text: 'Export SID file',
-        handler: exportSID,
-        disabled: true
+        handler: () => app.exportSID()
       }),
       new MenuItem({
         text: 'Export to...',
         submenu: new Menu([
           new MenuItem({
             text: 'Assembly code (.asm)',
-            handler: logHandler,
-            disabled: true
+            handler: () => app.exportASM()
           }),
           new MenuItem({
             text: 'Player program (.prg)',
-            handler: logHandler,
-            disabled: true
+            handler: () => app.exportPlayer()
           })
         ])
       }),
@@ -295,13 +336,6 @@ namespace Private {
   }
 
   /**
-   * Compile current document and export to .sid
-   */
-  function exportSID(): void {
-    console.log('SID exported');
-  }
-
-  /**
    * Toggle Piano Roll panel widget
    */
   function viewPianoRoll(item: MenuItem, app: App): void {
@@ -341,4 +375,42 @@ namespace Private {
 
     return widget;
   }
+}
+
+namespace Util {
+  /**
+   * Figure out how long it takes for a method to execute.
+   *
+   * @param {Function} method to test
+   * @param {number} iterations number of executions.
+   * @param {Array} args to pass in.
+   * @param {T} context the context to call the method in.
+   * @return {number} the time it took, in milliseconds to execute.
+   */
+  export
+  function bench(name: string, callback: any): any {
+    let time = 0;
+    let timer = (action: string) => {
+      let d = Date.now();
+      if (time < 1 || action === 'start') {
+        time = d;
+        return 0;
+      } else if (action === 'stop') {
+        let t = d - time;
+        time = 0;
+        return t;
+      } else {
+        return d - time;
+      }
+    };
+
+    let result: any;
+    timer('start');
+    result = callback.apply(this);
+    let execTime = timer('stop');
+
+    console.log(`[bench] ${name} took ${execTime}ms`);
+
+    return result;
+  };
 }

@@ -18,6 +18,10 @@ class DocumentEditor extends AceWidget {
     });
   }
 
+  get content(): string {
+    return this.editor.getValue();
+  }
+
   onFocus() {
     console.log('focus');
   }
