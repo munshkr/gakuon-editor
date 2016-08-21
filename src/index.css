@@ -39,7 +39,8 @@ body {
   padding-bottom: 2px;
 }
 
-.p-DockTabPanel > .p-StackedPanel {
+.p-DockTabPanel > .p-StackedPanel,
+.p-TabPanel > .p-StackedPanel {
   padding: 10px;
   background: white;
   border: 1px solid #C0C0C0;

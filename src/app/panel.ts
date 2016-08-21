@@ -21,6 +21,18 @@ import {
 } from '../document';
 
 import {
+  PianoRoll
+} from '../piano_roll';
+
+import {
+  InstrumentEditor
+} from '../instrument_editor';
+
+import {
+  Oscilloscope
+} from '../oscilloscope';
+
+import {
   App
 } from './index';
 
@@ -38,8 +50,8 @@ class AppPanel extends SplitPanel {
     let docPanel = Private.createDocumentTabPanel(app);
     let sidePanel = Private.createSidePanel(app);
 
-    SplitPanel.setStretch(docPanel, 0);
-    SplitPanel.setStretch(sidePanel, 2);
+    SplitPanel.setStretch(docPanel, 2);
+    SplitPanel.setStretch(sidePanel, 3);
 
     this.id = PANEL_ID;
     this.orientation = SplitPanel.Horizontal;
@@ -88,12 +100,12 @@ namespace Private {
   function createSidePanel(app: App): DockPanel {
     let panel = new DockPanel();
 
-    let oscWidget = createPlaceholder('Oscilloscope', 'blue');
-    let contextWidget = createPlaceholder('Context', 'red');
-    let pianoRollWidget = createPlaceholder('Piano Roll', 'green');
+    let pianoRollWidget = new PianoRoll();
+    let instrumentWidget = new InstrumentEditor();
+    let oscWidget = new Oscilloscope();
 
-    panel.insertRight(oscWidget);
-    panel.insertRight(contextWidget, oscWidget);
+    panel.insertRight(instrumentWidget);
+    panel.insertRight(oscWidget, instrumentWidget);
     panel.insertBottom(pianoRollWidget);
 
     return panel;
