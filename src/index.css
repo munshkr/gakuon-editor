@@ -6,9 +6,9 @@ body {
 
 #main {
   position: absolute;
-  top: 30px;
-  left: 8px;
-  right: 8px;
+  top: 29px;
+  left: 6px;
+  right: 6px;
   bottom: 6px;
 }
 
@@ -34,7 +34,8 @@ body {
   background: #3498DB;
 }
 
-.p-DockTabPanel {
+.p-DockTabPanel,
+.p-TabPanel {
   padding-right: 2px;
   padding-bottom: 2px;
 }
@@ -91,6 +92,7 @@ body {
   padding: 0px 10px;
   background: #E5E5E5;
   font: 12px Helvetica, Arial, sans-serif;
+  box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
 }
 
 .p-TabBar-tab:first-child {

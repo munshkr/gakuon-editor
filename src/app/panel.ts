@@ -55,6 +55,7 @@ class AppPanel extends SplitPanel {
 
     this.id = PANEL_ID;
     this.orientation = SplitPanel.Horizontal;
+    this.spacing = 5;
     this.addChild(docPanel);
     this.addChild(sidePanel);
 
