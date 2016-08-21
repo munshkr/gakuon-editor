@@ -53,15 +53,14 @@ class App {
    * Get current document
    */
   get currentDocument(): DocumentPanel {
-    return this._currentDocument;
+    return this._panel.documentPanel.currentWidget as DocumentPanel;
   }
 
   /**
    * Set current document
    */
-  set currentDocument(doc) {
-    this._currentDocument = doc;
-    // TODO emit signal to doc
+  set currentDocument(doc: DocumentPanel) {
+    this._panel.documentPanel.currentWidget = doc;
   }
 
   private _menuBar: MenuBar;
