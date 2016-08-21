@@ -11,26 +11,19 @@ import {
 } from 'phosphor-panel';
 
 import {
-  SplitPanel
-} from 'phosphor-splitpanel';
-
-import {
-  TabPanel
-} from 'phosphor-tabs';
-
-import {
-  DockPanel
-} from 'phosphor-dockpanel';
-
-import {
   Widget
 } from 'phosphor-widget';
 
 import {
   DocumentPanel
-} from './document';
+} from '../document';
 
-const PANEL_ID = 'main';
+import {
+  AppPanel
+} from './panel';
+
+export * from './panel';
+
 
 
 export
@@ -52,7 +45,7 @@ class App {
   /**
    * Get dock panel
    */
-  get panel(): Panel {
+  get panel(): AppPanel {
     return this._panel;
   }
 
@@ -72,7 +65,7 @@ class App {
   }
 
   private _menuBar: MenuBar;
-  private _panel: Panel;
+  private _panel: AppPanel;
   private _currentDocument: DocumentPanel;
 }
 
@@ -82,44 +75,8 @@ class App {
  */
 namespace Private {
   export
-  function createPanel(app: App): SplitPanel {
-    let docPanel = createDocumentTabPanel(app);
-    let sidePanel = createSidePanel(app);
-
-    SplitPanel.setStretch(docPanel, 0);
-    SplitPanel.setStretch(sidePanel, 2);
-
-    let panel = new SplitPanel();
-    panel.id = PANEL_ID;
-    panel.orientation = SplitPanel.Horizontal;
-    panel.addChild(docPanel);
-    panel.addChild(sidePanel);
-
-    return panel;
-  }
-
-  function createDocumentTabPanel(app: App): TabPanel {
-    let panel = new TabPanel();
-    panel.tabsMovable = true;
-
-    let docPanel = new DocumentPanel();
-    panel.addChild(docPanel);
-
-    return panel;
-  }
-
-  function createSidePanel(app: App): DockPanel {
-    let panel = new DockPanel();
-
-    let oscWidget = createPlaceholder('Oscilloscope', 'blue');
-    let contextWidget = createPlaceholder('Context', 'red');
-    let pianoRollWidget = createPlaceholder('Piano Roll', 'green');
-
-    panel.insertRight(oscWidget);
-    panel.insertRight(contextWidget, oscWidget);
-    panel.insertBottom(pianoRollWidget);
-
-    return panel;
+  function createPanel(app: App): AppPanel {
+    return new AppPanel(app);
   }
 
   export
@@ -334,7 +291,7 @@ namespace Private {
    */
   function newFile(app: App): void {
     let doc = new DocumentPanel();
-    (app.panel.childAt(0) as TabPanel).addChild(doc);
+    app.panel.documentPanel.addChild(doc);
     app.currentDocument = doc;
   }
 
@@ -351,7 +308,7 @@ namespace Private {
   function viewPianoRoll(item: MenuItem, app: App): void {
     // TODO: Show/hide panel
     let panel = createPlaceholder('Piano Roll', 'green');
-    (app.panel.childAt(1) as DockPanel).insertRight(panel);
+    app.panel.sidePanel.insertRight(panel);
   }
 
   /**
@@ -360,7 +317,7 @@ namespace Private {
   function viewInstrumentEditor(item: MenuItem, app: App): void {
     // TODO: Show/hide panel
     let panel = createPlaceholder('Instrument Editor', 'red');
-    (app.panel.childAt(1) as DockPanel).insertRight(panel);
+    app.panel.sidePanel.insertRight(panel);
   }
 
   /**
@@ -369,7 +326,7 @@ namespace Private {
   function viewOscilloscope(item: MenuItem, app: App): void {
     // TODO: Show/hide panel
     let panel = createPlaceholder('Oscilloscope', 'blue');
-    (app.panel.childAt(1) as DockPanel).insertRight(panel);
+    app.panel.sidePanel.insertRight(panel);
   }
 
   /**
