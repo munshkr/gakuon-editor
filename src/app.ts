@@ -7,6 +7,18 @@ import {
 } from 'phosphor-menus';
 
 import {
+  Panel
+} from 'phosphor-panel';
+
+import {
+  SplitPanel
+} from 'phosphor-splitpanel';
+
+import {
+  TabPanel
+} from 'phosphor-tabs';
+
+import {
   DockPanel
 } from 'phosphor-dockpanel';
 
@@ -28,7 +40,7 @@ class App {
    */
   constructor() {
     this._menuBar = Private.createMenuBar(this);
-    this._panel = Private.createDockPanel(this);
+    this._panel = Private.createPanel(this);
 
     // attach menu and panel to HTML body
     this._menuBar.attach(document.body);
@@ -40,7 +52,7 @@ class App {
   /**
    * Get dock panel
    */
-  get dockPanel(): DockPanel {
+  get panel(): Panel {
     return this._panel;
   }
 
@@ -60,7 +72,7 @@ class App {
   }
 
   private _menuBar: MenuBar;
-  private _panel: DockPanel;
+  private _panel: Panel;
   private _currentDocument: DocumentPanel;
 }
 
@@ -69,6 +81,47 @@ class App {
  * The namespace for the `App` class private data
  */
 namespace Private {
+  export
+  function createPanel(app: App): SplitPanel {
+    let docPanel = createDocumentTabPanel(app);
+    let sidePanel = createSidePanel(app);
+
+    SplitPanel.setStretch(docPanel, 0);
+    SplitPanel.setStretch(sidePanel, 2);
+
+    let panel = new SplitPanel();
+    panel.id = PANEL_ID;
+    panel.orientation = SplitPanel.Horizontal;
+    panel.addChild(docPanel);
+    panel.addChild(sidePanel);
+
+    return panel;
+  }
+
+  function createDocumentTabPanel(app: App): TabPanel {
+    let panel = new TabPanel();
+    panel.tabsMovable = true;
+
+    let docPanel = new DocumentPanel();
+    panel.addChild(docPanel);
+
+    return panel;
+  }
+
+  function createSidePanel(app: App): DockPanel {
+    let panel = new DockPanel();
+
+    let oscWidget = createPlaceholder('Oscilloscope', 'blue');
+    let contextWidget = createPlaceholder('Context', 'red');
+    let pianoRollWidget = createPlaceholder('Piano Roll', 'green');
+
+    panel.insertRight(oscWidget);
+    panel.insertRight(contextWidget, oscWidget);
+    panel.insertBottom(pianoRollWidget);
+
+    return panel;
+  }
+
   export
   function createMenuBar(app: App): MenuBar {
     let fileMenu = new Menu([
@@ -269,26 +322,6 @@ namespace Private {
     ]);
   }
 
-  export
-  function createDockPanel(app: App): DockPanel {
-    let panel = new DockPanel();
-    panel.id = PANEL_ID;
-
-    let oscWidget = createPlaceholder('Oscilloscope', 'blue');
-    let contextWidget = createPlaceholder('Context', 'red');
-    let pianoRollWidget = createPlaceholder('Piano Roll', 'green');
-
-    let docPanel = new DocumentPanel();
-
-    panel.insertTabAfter(docPanel);
-
-    panel.insertRight(oscWidget, docPanel);
-    panel.insertBottom(contextWidget, oscWidget);
-    panel.insertBottom(pianoRollWidget);
-
-    return panel;
-  }
-
   /**
    * A handler which logs the item text to the log span.
    */
@@ -301,7 +334,7 @@ namespace Private {
    */
   function newFile(app: App): void {
     let doc = new DocumentPanel();
-    app.dockPanel.insertTabAfter(doc);
+    (app.panel.childAt(0) as TabPanel).addChild(doc);
     app.currentDocument = doc;
   }
 
@@ -318,7 +351,7 @@ namespace Private {
   function viewPianoRoll(item: MenuItem, app: App): void {
     // TODO: Show/hide panel
     let panel = createPlaceholder('Piano Roll', 'green');
-    app.dockPanel.insertRight(panel);
+    (app.panel.childAt(1) as DockPanel).insertRight(panel);
   }
 
   /**
@@ -327,7 +360,7 @@ namespace Private {
   function viewInstrumentEditor(item: MenuItem, app: App): void {
     // TODO: Show/hide panel
     let panel = createPlaceholder('Instrument Editor', 'red');
-    app.dockPanel.insertRight(panel);
+    (app.panel.childAt(1) as DockPanel).insertRight(panel);
   }
 
   /**
@@ -336,7 +369,7 @@ namespace Private {
   function viewOscilloscope(item: MenuItem, app: App): void {
     // TODO: Show/hide panel
     let panel = createPlaceholder('Oscilloscope', 'blue');
-    app.dockPanel.insertRight(panel);
+    (app.panel.childAt(1) as DockPanel).insertRight(panel);
   }
 
   /**
