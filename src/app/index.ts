@@ -30,6 +30,10 @@ import {
   Assembler
 } from '6502asm';
 
+import {
+  jsSID
+} from 'jssid';
+
 export * from './panel';
 
 
@@ -97,6 +101,12 @@ class App {
     let source = this.currentDocument.editor.content;
     let asm = Util.bench('compile', () => this._compiler.compile(source));
     let {objectCode} = Util.bench('assemble', () => this._assembler.assemble(asm));
+    let sidData = Uint8Array.from(objectCode);
+
+    let player = new jsSID(16384, 0.0005);
+    player.loadinitdata(sidData, 1);
+    player.playcont();
+
     console.log(objectCode);
   }
 
