@@ -34,6 +34,10 @@ import {
   jsSID
 } from 'jssid';
 
+import {
+  saveAs
+} from 'file-saver';
+
 export * from './panel';
 
 
@@ -103,11 +107,8 @@ class App {
     let {objectCode} = Util.bench('assemble', () => this._assembler.assemble(asm));
     let sidData = Uint8Array.from(objectCode);
 
-    let player = new jsSID(16384, 0.0005);
-    player.loadinitdata(sidData, 1);
-    player.playcont();
-
-    console.log(objectCode);
+    let blob = new Blob([sidData], { type: 'application/octet-binary' });
+    saveAs(blob, 'Untitled.sid');
   }
 
   /**
@@ -116,7 +117,9 @@ class App {
   exportASM() {
     let source = this.currentDocument.editor.content;
     let asm = Util.bench('compile', () => this._compiler.compile(source));
-    console.log(asm);
+
+    let blob = new Blob([asm], { type: 'text/plain;charset=utf-8' });
+    saveAs(blob, 'Untitled.asm');
   }
 
   /**
@@ -129,7 +132,10 @@ class App {
       return compiler.compile(source);
     });
     let {objectCode} = Util.bench('assemble', () => this._assembler.assemble(asm));
-    console.log(objectCode);
+    let prgData = Uint8Array.from(objectCode);
+
+    let blob = new Blob([prgData], { type: 'application/octet-binary' });
+    saveAs(blob, 'Untitled.prg');
   }
 
   private _menuBar: MenuBar;

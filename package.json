@@ -36,6 +36,7 @@
     "babel-loader": "^6.2.5",
     "babel-preset-es2015": "^6.13.2",
     "css-loader": "^0.23.1",
+    "file-saver": "^1.3.2",
     "gakuon": "github:munshkr/gakuon",
     "jssid": "github:munshkr/jssid",
     "phosphor-dockpanel": "^0.9.7",
