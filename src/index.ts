@@ -11,6 +11,7 @@ import './index.css';
  */
 function main(): void {
   let app = new App();
+  (<any>window).app = app;
 }
 
 window.onload = main;

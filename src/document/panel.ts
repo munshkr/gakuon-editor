@@ -99,21 +99,27 @@ namespace Private {
     return tb;
   }
 
-  export
   function createPlayButton(): ToolbarButton {
     return new ToolbarButton({
       className: 'fa fa-play',
       tooltip: 'Play song',
-      onClick: () => alert('not implemented')
+      onClick: play
     });
   }
 
-  export
   function createStopButton(): ToolbarButton {
     return new ToolbarButton({
       className: 'fa fa-stop',
       tooltip: 'Stop song',
-      onClick: () => alert('not implemented')
+      onClick: stop
     });
+  }
+
+  function play(): void {
+    (<any>window).app.play();
+  }
+
+  function stop(): void {
+    (<any>window).app.stop();
   }
 }

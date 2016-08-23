@@ -56,6 +56,7 @@ class App {
 
     this._compiler = new Compiler();
     this._assembler =  new Assembler();
+    this._player = new jsSID(16384, 0.0005);
 
     window.onresize = () => this._panel.update();
   }
@@ -96,6 +97,26 @@ class App {
     while (docPanel.childCount() > 0) {
       docPanel.currentWidget.close();
     }
+  }
+
+  /**
+   * Play document
+   */
+  play(): void {
+    let source = this.currentDocument.editor.content;
+    let asm = Util.bench('compile', () => this._compiler.compile(source));
+    let {objectCode} = Util.bench('assemble', () => this._assembler.assemble(asm));
+    let sidData = Uint8Array.from(objectCode);
+
+    this._player.loadinitdata(sidData, 0);
+    this._player.playcont();
+  }
+
+  /**
+   * Stop playing document
+   */
+  stop(): void {
+    this._player.stop();
   }
 
   /**
@@ -143,6 +164,7 @@ class App {
   private _currentDocument: DocumentPanel;
   private _compiler: Compiler;
   private _assembler: Assembler;
+  private _player: jsSID;
 }
 
 
