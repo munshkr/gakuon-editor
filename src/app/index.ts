@@ -31,8 +31,9 @@ import {
 } from '6502asm';
 
 import {
-  jsSID
-} from 'jssid';
+  Player as SIDPlayer,
+  ReSID
+} from 'sid';
 
 import {
   saveAs
@@ -56,7 +57,7 @@ class App {
 
     this._compiler = new Compiler();
     this._assembler =  new Assembler();
-    this._player = new jsSID(16384, 0.0005);
+    this._player = new SIDPlayer(ReSID);
 
     window.onresize = () => this._panel.update();
   }
@@ -106,10 +107,9 @@ class App {
     let source = this.currentDocument.editor.content;
     let asm = Util.bench('compile', () => this._compiler.compile(source));
     let {objectCode} = Util.bench('assemble', () => this._assembler.assemble(asm));
-    let sidData = Uint8Array.from(objectCode);
-
-    this._player.loadinitdata(sidData, 0);
-    this._player.playcont();
+    // let sidData = Uint8Array.from(objectCode);
+    this._player.loadData(objectCode);
+    this._player.play();
   }
 
   /**
@@ -164,7 +164,7 @@ class App {
   private _currentDocument: DocumentPanel;
   private _compiler: Compiler;
   private _assembler: Assembler;
-  private _player: jsSID;
+  private _player: SIDPlayer;
 }
 
 

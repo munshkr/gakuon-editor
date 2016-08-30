@@ -7,6 +7,9 @@ module.exports = {
     filename: './build/bundle.js'
   },
   devtool: 'source-map',
+  externals: {
+    pico: 'Pico'
+  },
   resolve: {
     extensions: ['', '.webpack.js', '.web.js', '.ts', '.tsx', '.js']
   },
@@ -23,7 +26,8 @@ module.exports = {
       { test: /\.tsx?$/, loader: 'ts-loader' },
       { test: /\.js$/,
         include: [
-          path.resolve(__dirname, "node_modules/gakuon")
+          path.resolve(__dirname, 'node_modules/gakuon'),
+          path.resolve(__dirname, 'node_modules/sid')
         ],
         loader: 'babel',
         query: { presets: ['es2015'] } }
